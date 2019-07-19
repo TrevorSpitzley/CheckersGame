@@ -10,7 +10,7 @@ public class CheckersGUI {
         frame.getContentPane().add(panel);
 
         frame.setResizable(true);
-        frame.setPreferredSize(new Dimension(800, 700));
+        frame.setPreferredSize(new Dimension(1000, 700));
         frame.pack();
         frame.setVisible(true);
     }
