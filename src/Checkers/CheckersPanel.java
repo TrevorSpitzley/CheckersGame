@@ -12,8 +12,8 @@ public class CheckersPanel extends JPanel {
     private JMenu menu;
     private JMenuBar menuBar;
     private JMenuItem newGame;
+    private JMenuItem exitGame;
     private JMenuItem basicRules;
-    private JButton undoMove;
     private String theRules;
     private listener listener;
     private JLabel blackLabel;
@@ -38,7 +38,6 @@ public class CheckersPanel extends JPanel {
     private ImageIcon blackKing;
 
     public CheckersPanel(){
-
         theRules = "1.) Rock, Paper, Scissors to see who goes first! \n" +
                 "2.) Whoever wins the RPS, begins by moving any of their pieces from the front \n" +
                 " row one space diagonally to the left or right towards the opposite player! \n" +
@@ -47,12 +46,11 @@ public class CheckersPanel extends JPanel {
                 "4.) As soon as one of your checkers reaches the first row of your opponents,\n" +
                 "it becomes a King!\n" + "5.) Regardless of royalty, if all adjacent sides of your\n" +
                 " piece are occupied by your opponent's pieces... You may not move that piece.\n" +
-                " It has been locked, and cannot move until an adjacent side has been opened up.";
+                " It has been locked, and cannot move until an adjacent side has been opened up. \n" +
+                " 6.) If you absolutely must undo a move, simply chant, ''CandyMan.. CandyMan..CandyMan.." +
+                "'' three times, then right click.";
 
-        menu = new JMenu();
-        menuBar = new JMenuBar();
-        newGame = new JMenuItem();
-        basicRules = new JMenuItem();
+        createMenuBar();
 
         redLabel = new JLabel("Player 1");
         redScore = new JLabel("Score");
@@ -97,6 +95,27 @@ public class CheckersPanel extends JPanel {
         add(mainPanel);
     }
 
+    protected JMenuBar createMenuBar(){
+        menu = new JMenu("Menu");
+
+        menuBar = new JMenuBar();
+
+        exitGame = new JMenuItem("Exit");
+        exitGame.addActionListener(listener);
+        newGame = new JMenuItem("New Game");
+        newGame.addActionListener(listener);
+        basicRules = new JMenuItem("Quick Rules");
+        basicRules.addActionListener(listener);
+
+        menu.add(newGame);
+        menu.add(basicRules);
+        menu.add(exitGame);
+
+        menuBar.add(menu);
+
+        return menuBar;
+    }
+
     private void setBackgroundColor(int r, int c){
         if ((r % 2 == 0 && c % 2 == 0) || (r % 2 == 1 && c % 2 == 1)){
             board[r][c].setBackground(Color.red);
@@ -116,6 +135,15 @@ public class CheckersPanel extends JPanel {
             if (e.getSource() == basicRules){
                 JOptionPane.showMessageDialog(null, theRules);
             }
+
+            if (e.getSource() == exitGame){
+                System.exit(0);
+            }
+
+            if (e.getSource() == newGame){
+
+            }
         }
     }
+
 }

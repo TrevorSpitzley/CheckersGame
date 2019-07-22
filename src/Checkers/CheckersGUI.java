@@ -11,6 +11,7 @@ public class CheckersGUI {
         CheckersPanel panel = new CheckersPanel();
         frame.getContentPane().add(panel);
 
+        frame.setJMenuBar(panel.createMenuBar());
         frame.setResizable(true);
         frame.setPreferredSize(new Dimension(1000, 700));
         frame.pack();
