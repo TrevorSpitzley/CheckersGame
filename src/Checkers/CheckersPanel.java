@@ -18,8 +18,10 @@ public class CheckersPanel extends JPanel {
     private listener listener;
     private JLabel blackLabel;
     private JLabel redLabel;
-    private String blackScore;
-    private String redScore;
+    private JLabel blackScore;
+    private JLabel redScore;
+    private JLabel separator;
+    private JLabel separator2;
     private boolean firstHalfDone = false;
     private boolean secondHalfDone = false;
     private int fromRow;
@@ -28,6 +30,8 @@ public class CheckersPanel extends JPanel {
     private int toColumn;
     private JPanel checkerPanel;
     private JPanel mainPanel;
+    private JPanel leftPanel;
+    private JPanel rightPanel;
     private ImageIcon redChecker;
     private ImageIcon redKing;
     private ImageIcon blackchecker;
@@ -50,16 +54,33 @@ public class CheckersPanel extends JPanel {
         newGame = new JMenuItem();
         basicRules = new JMenuItem();
 
-        redLabel = new JLabel("Name plus \n" + "score");
-        blackLabel = new JLabel("Name plus \n" + "score");
+        redLabel = new JLabel("Player 1");
+        redScore = new JLabel("Score");
+        blackLabel = new JLabel("Player 2");
+        blackScore = new JLabel("Score");
+        separator = new JLabel("__________");
+        separator2 = new JLabel("__________");
 
         board = new JButton[8][8];
         listener = new listener();
         checkerPanel = new JPanel();
         mainPanel = new JPanel();
+        leftPanel = new JPanel();
+        rightPanel = new JPanel();
 
         checkerPanel.setLayout(new GridLayout(8, 8, 1, 1));
         checkerPanel.setPreferredSize(new Dimension(600, 600));
+
+        leftPanel.setLayout(new GridLayout(3, 1, 1, 1));
+        leftPanel.add(blackLabel);
+        leftPanel.add(separator);
+        leftPanel.add(blackScore);
+
+        rightPanel.setLayout(new GridLayout(3, 1, 1, 1));
+        rightPanel.add(redLabel);
+        rightPanel.add(separator2);
+        rightPanel.add(redScore);
+
 
         for (int r = 0; r < 8; r++)
             for (int c = 0; c < 8; c++) {
@@ -69,11 +90,11 @@ public class CheckersPanel extends JPanel {
                 setBackgroundColor(r, c);
             }
 
-        mainPanel.add(blackLabel);
+        mainPanel.add(leftPanel);
         mainPanel.add(checkerPanel);
-        mainPanel.add(redLabel);
+        mainPanel.add(rightPanel);
 
-        add(mainPanel, BorderLayout.NORTH);
+        add(mainPanel);
     }
 
     private void setBackgroundColor(int r, int c){
