@@ -4,8 +4,8 @@ public class CheckersPiece {
 
     private String color;
     private boolean isKinged;
-    private int row = 0;
-    private int col = 0;
+    private int row;
+    private int col;
     private int boundUp = 1;
     private int boundDown = 1;
     private int boundLeft = 1;
@@ -18,4 +18,19 @@ public class CheckersPiece {
         this.col = col;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public boolean isKinged() {
+        return isKinged;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
 }

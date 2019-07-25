@@ -34,7 +34,7 @@ public class CheckersPanel extends JPanel {
     private JPanel rightPanel;
     private ImageIcon redChecker;
     private ImageIcon redKing;
-    private ImageIcon blackchecker;
+    private ImageIcon blackChecker;
     private ImageIcon blackKing;
 
     public CheckersPanel(){
@@ -51,6 +51,7 @@ public class CheckersPanel extends JPanel {
                 "'' three times, then right click.";
 
         createMenuBar();
+        createIcons();
 
         redLabel = new JLabel("Player 1");
         redScore = new JLabel("Score");
@@ -82,10 +83,11 @@ public class CheckersPanel extends JPanel {
 
         for (int r = 0; r < 8; r++)
             for (int c = 0; c < 8; c++) {
-                board[r][c] = new JButton("", null);
+                board[r][c] = new JButton("", redChecker);
                 board[r][c].addActionListener(listener);
                 checkerPanel.add(board[r][c]);
                 setBackgroundColor(r, c);
+                setIcons(r, c);
             }
 
         mainPanel.add(leftPanel);
@@ -127,6 +129,29 @@ public class CheckersPanel extends JPanel {
 
     private void createIcons(){
         redChecker = new ImageIcon("/.src/Checkers/Checker_Piece_Red.png");
+        redKing = new ImageIcon("/.src/Checkers/redKingChecker.png");
+        blackChecker = new ImageIcon("/.src/Checkers/CheckerBlackPiece.png");
+        blackKing = new ImageIcon("/.src/Checkers/BlackCheckerKing.png");
+    }
+
+    private void setIcons(int r, int c){
+        if (board[r][c] != null && model.pieceAt(r, c) != null) {
+            if (model.pieceAt(r, c).getColor().equals("Red")
+                    && !model.pieceAt(r, c).isKinged())
+                board[r][c].setIcon(redChecker);
+
+            if (model.pieceAt(r, c).getColor().equals("Red")
+                    && model.pieceAt(r, c).isKinged())
+                board[r][c].setIcon(redKing);
+
+            if (model.pieceAt(r, c).getColor().equals("Black")
+                    && !model.pieceAt(r, c).isKinged())
+                board[r][c].setIcon(blackChecker);
+
+            if (model.pieceAt(r, c).getColor().equals("Black")
+                    && model.pieceAt(r, c).isKinged())
+                board[r][c].setIcon(blackKing);
+        }
     }
 
     private class listener implements ActionListener{
