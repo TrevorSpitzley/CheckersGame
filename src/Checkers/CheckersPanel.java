@@ -38,6 +38,7 @@ public class CheckersPanel extends JPanel {
     private ImageIcon blackKing;
 
     public CheckersPanel(){
+        model = new CheckersModel();
         theRules = "1.) Rock, Paper, Scissors to see who goes first! \n" +
                 "2.) Whoever wins the RPS, begins by moving any of their pieces from the front \n" +
                 " row one space diagonally to the left or right towards the opposite player! \n" +
@@ -54,9 +55,9 @@ public class CheckersPanel extends JPanel {
         createIcons();
 
         redLabel = new JLabel("Player 1");
-        redScore = new JLabel("Score");
+        redScore = new JLabel("" + model.getRedScore());
         blackLabel = new JLabel("Player 2");
-        blackScore = new JLabel("Score");
+        blackScore = new JLabel("" + model.getBlackScore());
         separator = new JLabel("__________");
         separator2 = new JLabel("__________");
 
@@ -80,21 +81,24 @@ public class CheckersPanel extends JPanel {
         rightPanel.add(separator2);
         rightPanel.add(redScore);
 
+        mainPanel.add(leftPanel);
+        mainPanel.add(checkerPanel);
+        mainPanel.add(rightPanel);
 
+        setButtons();
+
+        add(mainPanel);
+    }
+
+    private void setButtons(){
         for (int r = 0; r < 8; r++)
             for (int c = 0; c < 8; c++) {
-                board[r][c] = new JButton("", redChecker);
+                board[r][c] = new JButton("", null);
                 board[r][c].addActionListener(listener);
                 checkerPanel.add(board[r][c]);
                 setBackgroundColor(r, c);
                 setIcons(r, c);
             }
-
-        mainPanel.add(leftPanel);
-        mainPanel.add(checkerPanel);
-        mainPanel.add(rightPanel);
-
-        add(mainPanel);
     }
 
     protected JMenuBar createMenuBar(){
@@ -128,30 +132,32 @@ public class CheckersPanel extends JPanel {
     }
 
     private void createIcons(){
-        redChecker = new ImageIcon("/.src/Checkers/Checker_Piece_Red.png");
-        redKing = new ImageIcon("/.src/Checkers/redKingChecker.png");
-        blackChecker = new ImageIcon("/.src/Checkers/CheckerBlackPiece.png");
-        blackKing = new ImageIcon("/.src/Checkers/BlackCheckerKing.png");
+        redChecker = new ImageIcon("C:\\Users\\trevo\\IdeaProjects\\CheckersGame\\src\\Checkers\\Checker_Piece_Red.png");
+        redKing = new ImageIcon("C:\\Users\\trevo\\IdeaProjects\\CheckersGame\\src\\Checkers\\redKingChecker.png");
+        blackChecker = new ImageIcon("C:\\Users\\trevo\\IdeaProjects\\CheckersGame\\src\\Checkers\\CheckerBlackPiece.png");
+        blackKing = new ImageIcon("C:\\Users\\trevo\\IdeaProjects\\CheckersGame\\src\\Checkers\\BlackCheckerKing.png");
     }
 
     private void setIcons(int r, int c){
-        if (board[r][c] != null && model.pieceAt(r, c) != null) {
-            if (model.pieceAt(r, c).getColor().equals("Red")
+            if (model.pieceAt(r, c) != null &&
+                    model.pieceAt(r, c).getColor().equals("Red")
                     && !model.pieceAt(r, c).isKinged())
                 board[r][c].setIcon(redChecker);
 
-            if (model.pieceAt(r, c).getColor().equals("Red")
+            if (model.pieceAt(r, c) != null &&
+                    model.pieceAt(r, c).getColor().equals("Red")
                     && model.pieceAt(r, c).isKinged())
                 board[r][c].setIcon(redKing);
 
-            if (model.pieceAt(r, c).getColor().equals("Black")
+            if (model.pieceAt(r, c) != null &&
+                    model.pieceAt(r, c).getColor().equals("Black")
                     && !model.pieceAt(r, c).isKinged())
                 board[r][c].setIcon(blackChecker);
 
-            if (model.pieceAt(r, c).getColor().equals("Black")
+            if (model.pieceAt(r, c) != null &&
+                    model.pieceAt(r, c).getColor().equals("Black")
                     && model.pieceAt(r, c).isKinged())
                 board[r][c].setIcon(blackKing);
-        }
     }
 
     private class listener implements ActionListener{
@@ -166,6 +172,7 @@ public class CheckersPanel extends JPanel {
             }
 
             if (e.getSource() == newGame){
+                model = new CheckersModel();
 
             }
         }

@@ -2,12 +2,37 @@ package Checkers;
 
 public class CheckersModel {
     private CheckersPiece[][] board;
+    private int redScore, blackScore;
 
     public CheckersModel(){
         board = new CheckersPiece[8][8];
         //Sets pieces in play
         setPieces();
+    }
 
+    public int getRedScore() {
+        return redScore;
+    }
+
+    public int getBlackScore() {
+        return blackScore;
+    }
+
+    protected void makeMove(Move m){
+
+    }
+
+    protected boolean isValidMove(Move m){
+        boolean isValid = false;
+
+        if (board[m.getFromRow()][m.getFromCol()] != null){
+           if (board[m.getToRow()][m.getToCol()] == null){
+
+           }
+
+        }
+
+        return isValid;
     }
 
     private void setPieces(){
