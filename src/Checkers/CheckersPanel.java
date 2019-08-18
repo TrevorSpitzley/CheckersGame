@@ -16,6 +16,7 @@ public class CheckersPanel extends JPanel {
     private JMenuItem basicRules;
     private String theRules;
     private listener listener;
+    private JLabel pieceLabel;
     private JLabel blackLabel;
     private JLabel redLabel;
     private JLabel blackScore;
@@ -54,6 +55,7 @@ public class CheckersPanel extends JPanel {
         createMenuBar();
         createIcons();
 
+        pieceLabel = new JLabel("Yeet");
         redLabel = new JLabel("Player 1");
         redScore = new JLabel("" + model.getRedScore());
         blackLabel = new JLabel("Player 2");
@@ -83,6 +85,9 @@ public class CheckersPanel extends JPanel {
 
         mainPanel.add(leftPanel);
         mainPanel.add(checkerPanel);
+
+        leftPanel.add(pieceLabel);
+
         mainPanel.add(rightPanel);
 
         setButtons();
@@ -124,10 +129,10 @@ public class CheckersPanel extends JPanel {
 
     private void setBackgroundColor(int r, int c){
         if ((r % 2 == 0 && c % 2 == 0) || (r % 2 == 1 && c % 2 == 1)){
-            board[r][c].setBackground(Color.red);
+            board[r][c].setBackground(Color.black);
         }
         if ((r % 2 == 1 && c % 2 == 0) || (r % 2 ==0 && c % 2 == 1)){
-            board[r][c].setBackground(Color.black);
+            board[r][c].setBackground(Color.white);
         }
     }
 
@@ -158,11 +163,21 @@ public class CheckersPanel extends JPanel {
                     model.pieceAt(r, c).getColor().equals("Black")
                     && model.pieceAt(r, c).isKinged())
                 board[r][c].setIcon(blackKing);
+
+            if (model.pieceAt(r, c) == null)
+                board[r][c].setIcon(null);
+    }
+
+    private void updateScores(){
+        redScore.setText("" + model.getRedScore());
+        blackScore.setText("" + model.getBlackScore());
+
     }
 
     private class listener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+
             if (e.getSource() == basicRules){
                 JOptionPane.showMessageDialog(null, theRules);
             }
@@ -173,8 +188,38 @@ public class CheckersPanel extends JPanel {
 
             if (e.getSource() == newGame){
                 model = new CheckersModel();
-
             }
+
+            for (int r = 0; r < 8; r++)
+                for (int c = 0; c < 8; c++) {
+                    if (firstHalfDone == false) {
+                        if (e.getSource() == board[r][c] && model.pieceAt(r, c) != null) {
+                            fromRow = r;
+                            fromColumn = c;
+                            firstHalfDone = true;
+                            pieceLabel.setText("" + model.pieceAt(r, c).toString());
+                            return;
+                        }
+                    }
+                    if (firstHalfDone == true) {
+                        if (e.getSource() == board[r][c] && model.pieceAt(r, c) == null) {
+                            toRow = r;
+                            toColumn = c;
+                            secondHalfDone = true;
+
+                            Move m = new Move(fromRow, fromColumn, toRow, toColumn);
+                            if (m.isValidMove()) {
+                                model.makeMove(m);
+                                setIcons(fromRow, fromColumn);
+                                setIcons(toRow, toColumn);
+                            }
+                            firstHalfDone = false;
+                            secondHalfDone = false;
+                            return;
+                        }
+                    }
+                }
+            updateScores();
         }
     }
 

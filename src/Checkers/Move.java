@@ -6,6 +6,7 @@ public class Move {
     private int fromCol;
     private int toRow;
     private int toCol;
+    private CheckersModel model = new CheckersModel();
 
     public Move(int fromRow, int fromCol, int toRow, int toCol) {
         this.fromRow = fromRow;
@@ -14,36 +15,47 @@ public class Move {
         this.toCol = toCol;
     }
 
-    //Complete getter's and setter's. All other methods belong above these for simplicity of reading
-    public int getFromRow() {
-        return fromRow;
+    protected boolean isValidMove(){
+        boolean isValid = false;
+        if (model.pieceAt(this.fromRow, this.fromCol) != null && model.pieceAt(this.toRow, this.toCol) == null) {
+            CheckersPiece temp = model.pieceAt(this.fromRow, this.fromCol);
+
+            if (temp.isKinged()) {
+                if (Math.abs(this.fromCol - this.toCol) <= 2 && Math.abs(this.fromRow - this.toRow) <= 2)
+                    isValid = true;
+            } else {
+                if (temp.getColor().equals("Black"))
+                    if ( (this.toRow > this.fromRow) && (this.toRow - this.fromRow == 1) && Math.abs(this.fromCol - this.toCol) == 1)
+                        isValid = true;
+                if (temp.getColor().equals("Red")){
+                    if ( (this.toRow < this.fromRow) && (this.fromRow - this.toRow == 1) && Math.abs(this.fromCol - this.toCol) == 1)
+                        isValid = true;
+                }
+            }
+        }
+
+        return isValid;
     }
 
-    public void setFromRow(int fromRow) {
-        this.fromRow = fromRow;
+    @Override
+    public String toString(){
+        return "Move: [" + this.fromRow + ", " + this.fromCol + "], to [" + this.toRow + ", " + this.toCol + "]";
+    }
+
+    //Complete getter's. All other methods belong above these for simplicity of reading
+    public int getFromRow() {
+        return fromRow;
     }
 
     public int getFromCol() {
         return fromCol;
     }
 
-    public void setFromCol(int fromCol) {
-        this.fromCol = fromCol;
-    }
-
     public int getToRow() {
         return toRow;
     }
 
-    public void setToRow(int toRow) {
-        this.toRow = toRow;
-    }
-
     public int getToCol() {
         return toCol;
-    }
-
-    public void setToCol(int toCol) {
-        this.toCol = toCol;
     }
 }
