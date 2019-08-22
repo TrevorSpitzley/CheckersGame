@@ -85,10 +85,10 @@ public class CheckersPanel extends JPanel {
 
         mainPanel.add(leftPanel);
         mainPanel.add(checkerPanel);
-
-        leftPanel.add(pieceLabel);
-
         mainPanel.add(rightPanel);
+
+        //Will remove later...
+        leftPanel.add(pieceLabel);
 
         setButtons();
 
@@ -188,6 +188,10 @@ public class CheckersPanel extends JPanel {
 
             if (e.getSource() == newGame){
                 model = new CheckersModel();
+                for (int r = 0; r < 8; r++)
+                    for (int c = 0; c < 8; c++) {
+                        setIcons(r, c);
+                    }
             }
 
             for (int r = 0; r < 8; r++)
