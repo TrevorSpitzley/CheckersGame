@@ -25,7 +25,7 @@ public class CheckersModel {
         if (m.isValidMove()){
             board[m.getToRow()][m.getToCol()] = board[m.getFromRow()][m.getFromCol()];
             board[m.getFromRow()][m.getFromCol()] = null;
-            board[m.getToRow()][m.getToCol()].setStats(m.getToRow(), m.getToCol());
+            board[m.getToRow()][m.getToCol()].updateInfo(m.getToRow(), m.getToCol());
         }
     }
 

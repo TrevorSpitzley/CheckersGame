@@ -12,40 +12,30 @@ public class CheckersPiece {
         this.isKinged = isKinged;
         this.row = row;
         this.col = col;
-        setStats(row, col);
     }
 
-    protected void setBooleanLimits(int r, int c){
-
-    }
-
-    protected void setStats(int r, int c){
-        setRowAndCol(r, c);
-        setBooleanLimits(r, c);
-    }
-
-    protected void setRowAndCol(int r, int c){
+    protected void updateInfo(int r, int c){
         this.row = r;
         this.col = c;
     }
 
-    public String getColor() {
+    protected String getColor() {
         return color;
     }
 
-    public boolean isKinged() {
+    protected boolean isKinged() {
         return isKinged;
     }
 
-    public void setKinged(boolean isKinged){
+    protected void setKinged(boolean isKinged){
         this.isKinged = isKinged;
     }
 
-    public int getRow() {
+    protected int getRow() {
         return row;
     }
 
-    public int getCol() {
+    protected int getCol() {
         return col;
     }
 
