@@ -14,6 +14,7 @@ public class CheckersPanel extends JPanel {
     private JMenuItem newGame;
     private JMenuItem exitGame;
     private JMenuItem basicRules;
+    private JMenuItem undoMove;
     private String theRules;
     private listener listener;
     private JLabel pieceLabel;
@@ -72,6 +73,7 @@ public class CheckersPanel extends JPanel {
 
         checkerPanel.setLayout(new GridLayout(8, 8, 1, 1));
         checkerPanel.setPreferredSize(new Dimension(600, 600));
+        setButtons();
 
         leftPanel.setLayout(new GridLayout(3, 1, 1, 1));
         leftPanel.add(blackLabel);
@@ -89,8 +91,6 @@ public class CheckersPanel extends JPanel {
 
         //Will remove later...
         leftPanel.add(pieceLabel);
-
-        setButtons();
 
         add(mainPanel);
     }
@@ -113,14 +113,20 @@ public class CheckersPanel extends JPanel {
 
         exitGame = new JMenuItem("Exit");
         exitGame.addActionListener(listener);
+
         newGame = new JMenuItem("New Game");
         newGame.addActionListener(listener);
+
         basicRules = new JMenuItem("Quick Rules");
         basicRules.addActionListener(listener);
+
+        undoMove = new JMenuItem("Undo Move :(");
+        undoMove.addActionListener(listener);
 
         menu.add(newGame);
         menu.add(basicRules);
         menu.add(exitGame);
+        menu.add(undoMove);
 
         menuBar.add(menu);
 
@@ -177,6 +183,15 @@ public class CheckersPanel extends JPanel {
     private class listener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            //If statement for undo button
+            if (e.getSource() == undoMove){
+                model.undoMove();
+                for (int r = 0; r < 8; r++)
+                    for (int c = 0; c < 8; c++) {
+                        setIcons(r, c);
+                    }
+            }
 
             if (e.getSource() == basicRules){
                 JOptionPane.showMessageDialog(null, theRules);

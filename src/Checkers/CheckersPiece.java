@@ -14,6 +14,13 @@ public class CheckersPiece {
         this.col = col;
     }
 
+    public CheckersPiece (CheckersPiece p) {
+        this.color = p.getColor();
+        this.isKinged = p.isKinged();
+        this.row = p.getRow();
+        this.col = p.getCol();
+    }
+
     protected void updateInfo(int r, int c){
         this.row = r;
         this.col = c;
